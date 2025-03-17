@@ -1,15 +1,15 @@
-package dev.valente.desafiocadastro;
+package dev.valente.desafiocadastro.entidade;
 
-public enum Tipo {
+public enum Type {
 
     CACHORRO(1),
     GATO(2);
 
-    Tipo(int tipo) {
+    Type(int type) {
     }
 
-    public static Tipo convertToTipo(int tipoInt) {
-        return switch (tipoInt) {
+    public static Type convertToType(int typeInt) {
+        return switch (typeInt) {
             case 1 -> CACHORRO;
             case 2 -> GATO;
             default -> throw new IllegalStateException("Unexpected value");

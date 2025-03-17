@@ -1,12 +1,8 @@
-package dev.valente.desafiocadastro;
+package dev.valente.desafiocadastro.service.menu;
 
 public class Menu {
 
-    public Menu() {
-        showMenu();
-    }
-
-    public void showMenu(){
+    public static void showMenu(){
         System.out.println("======================================");
         System.out.println("CadPet seu sistema de cadastro de Pets");
         System.out.println("======================================");

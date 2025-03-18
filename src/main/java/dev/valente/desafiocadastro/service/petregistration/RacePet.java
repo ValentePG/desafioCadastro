@@ -18,4 +18,9 @@ public record RacePet(String question) implements PetRegistrationOptions {
     public String getQuestion() {
         return this.question;
     }
+
+    private void assertIfMatchesRegex(String input) {
+        String regex = "^[a-zA-ZáéíóúÁÉÍÓÚçÇ ]*$";
+        if (!input.matches(regex)) throw new RuntimeException("Apenas letras são válidas aqui!");
+    }
 }

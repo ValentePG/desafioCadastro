@@ -36,7 +36,6 @@ public record AddressPet(String question) implements PetRegistrationOptions {
             System.out.println("Deseja salvar esta informação?(S/N): " + pet.getAddress());
             c = input.nextLine();
         }while (!c.equalsIgnoreCase("S"));
-
     }
 
     @Override

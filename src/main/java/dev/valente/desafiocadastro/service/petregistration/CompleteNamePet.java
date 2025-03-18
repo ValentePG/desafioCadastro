@@ -30,7 +30,7 @@ public record CompleteNamePet(String question) implements PetRegistrationOptions
 
                 pet.setFirstName(name[0]);
                 pet.setLastName(name[1]);
-                System.out.println("Deseja salvar este nome?(S/N) " + pet.getFullName());
+                System.out.println("Deseja salvar esta informação?(S/N) " + pet.getFullName());
                 c = input.nextLine();
 
             } catch (RuntimeException e){

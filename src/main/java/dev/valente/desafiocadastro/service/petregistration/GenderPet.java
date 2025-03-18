@@ -22,6 +22,9 @@ public record GenderPet(String question) implements PetRegistrationOptions {
                 out = input.nextLine();
             } catch (IllegalStateException ex){
                 System.out.println(ex.getMessage());
+            } catch (InputMismatchException ex){
+                System.out.println("Por favor digite o número da casa corretamente");
+                input.nextLine();
             }
         }while (!out.equalsIgnoreCase("S"));
     }

@@ -7,7 +7,7 @@ public class Pet {
     private Type type;
     private Gender gender;
     private Address address;
-    private int age;
+    private float age;
     private float weight;
     private String race;
 
@@ -43,11 +43,11 @@ public class Pet {
         this.address = address;
     }
 
-    public int getAge() {
+    public float getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(float age) {
         this.age = age;
     }
 

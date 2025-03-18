@@ -12,7 +12,7 @@ public enum Type {
         return switch (typeInt) {
             case 1 -> CACHORRO;
             case 2 -> GATO;
-            default -> throw new IllegalStateException("Unexpected value");
+            default -> throw new IllegalStateException("Por favor digite apenas 1 ou 2");
         };
     }
 }

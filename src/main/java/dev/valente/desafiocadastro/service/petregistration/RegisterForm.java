@@ -52,7 +52,6 @@ public class RegisterForm {
     public Pet registerPet(Scanner sc){
         Pet newPet = new Pet();
         getMap().forEach((key, value) -> {
-            System.out.println(value.getQuestion());
             value.registerPetInfo(newPet, sc);
         });
         return newPet;
@@ -76,7 +75,7 @@ public class RegisterForm {
 //    }
 
     public void showPet(Pet pet){
-        System.out.println("Nome do pet: " + pet.getFirstName());
+        System.out.println("Nome do pet: " + pet.getFullName());
         System.out.println("Idade do pet: " + pet.getAge());
         System.out.println("Endereço do pet: " + pet.getAddress().getStreet()
                 + ", " + pet.getAddress().getCity()

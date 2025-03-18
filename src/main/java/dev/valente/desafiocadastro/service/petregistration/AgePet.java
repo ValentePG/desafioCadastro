@@ -34,4 +34,13 @@ public record AgePet(String question) implements PetRegistrationOptions {
     public String getQuestion() {
         return this.question;
     }
+
+    private void assertMatchesWithRegex(String input) {
+        String regex = "^[0-9,.]*$";
+        if(!input.matches(regex)) throw new RuntimeException("Por favor digite apenas numeros aqui!");
+    }
+
+    private void assertAgeLessThan20(float age) {
+        if(age > 20) throw new RuntimeException("Idade inválida");
+    }
 }

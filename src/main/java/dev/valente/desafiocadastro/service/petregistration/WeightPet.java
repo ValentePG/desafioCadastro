@@ -33,4 +33,13 @@ public record WeightPet(String question) implements PetRegistrationOptions {
     public String getQuestion() {
         return this.question;
     }
+
+    private void assertMatchesWithRegex(String input) {
+        String regex = "^[0-9,.]*$";
+        if(!input.matches(regex)) throw new RuntimeException("Por favor digite apenas numeros aqui!");
+    }
+
+    private void assertWeightIsValid(float weight) {
+        if(weight > 60.0 || weight < 0.5) throw new RuntimeException("Peso inválido");
+    }
 }

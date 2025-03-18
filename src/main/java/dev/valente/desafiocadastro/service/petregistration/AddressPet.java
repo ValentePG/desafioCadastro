@@ -11,31 +11,33 @@ public record AddressPet(String question) implements PetRegistrationOptions {
 
     @Override
     public void registerPetInfo(Pet pet, Scanner input) {
-        String c;
-        int n = 0;
+        String infoUserInput;
+        String out;
+        int number = 0;
         Address address = new Address();
         do{
+            System.out.println(getQuestion());
             do{
                 try{
                     System.out.println("Numero da casa: ");
-                    n = input.nextInt();
+                    number = input.nextInt();
                     ScannerUtils.cleanBuffer(input);
-                    address.setNumber(n);
+                    address.setNumber(number);
                 } catch (InputMismatchException e){
                     ScannerUtils.cleanBuffer(input);
                     System.out.println("Por favor digite o número da casa corretamente");
                 }
-            }while (n == 0);
+            }while (number == 0);
             System.out.println("Cidade: ");
-            c = input.nextLine();
-            address.setCity(c);
+            infoUserInput = input.nextLine();
+            address.setCity(infoUserInput);
             System.out.println("Rua: ");
-            c = input.nextLine();
-            address.setStreet(c);
+            infoUserInput = input.nextLine();
+            address.setStreet(infoUserInput);
             pet.setAddress(address);
             System.out.println("Deseja salvar esta informação?(S/N): " + pet.getAddress());
-            c = input.nextLine();
-        }while (!c.equalsIgnoreCase("S"));
+            out = input.nextLine();
+        } while (!out.equalsIgnoreCase("S"));
     }
 
     @Override

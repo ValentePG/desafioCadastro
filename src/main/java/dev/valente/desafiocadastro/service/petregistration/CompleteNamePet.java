@@ -11,10 +11,12 @@ public record CompleteNamePet(String question) implements PetRegistrationOptions
     @Override
     public void registerPetInfo(Pet pet, Scanner input) {
 
-        String c;
+        String infoUserInput;
+        String out = "n";
         do{
-            c = input.nextLine();
-            if(c.isEmpty()){
+            System.out.println(getQuestion());
+            infoUserInput = input.nextLine();
+            if(infoUserInput.isEmpty()){
                 pet.setFirstName(NAO_INFORMADO);
                 pet.setLastName(NAO_INFORMADO);
                 System.out.println("Nome salvo como: " + NAO_INFORMADO);
@@ -22,22 +24,22 @@ public record CompleteNamePet(String question) implements PetRegistrationOptions
             }
 
             try {
-                assertIfMatchesRegex(c);
+                assertIfMatchesRegex(infoUserInput);
 
-                String[] name = c.split(" ");
+                String[] name = infoUserInput.split(" ");
 
                 assertIfLengthIsEqual2(name);
 
                 pet.setFirstName(name[0]);
                 pet.setLastName(name[1]);
                 System.out.println("Deseja salvar esta informação?(S/N) " + pet.getFullName());
-                c = input.nextLine();
+                out = input.nextLine();
 
             } catch (RuntimeException e){
                 System.out.println(e.getMessage());
             }
 
-        } while (!c.equalsIgnoreCase("S"));
+        } while (!out.equalsIgnoreCase("S"));
 
     }
 

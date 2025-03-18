@@ -10,16 +10,17 @@ public record TypePet(String question) implements PetRegistrationOptions {
 
     @Override
     public void registerPetInfo(Pet pet, Scanner input) {
-        int c;
-        String s = "n";
+        int userInfoInput;
+        String out = "n";
         do{
             try{
+                System.out.println(getQuestion());
                 System.out.println("Digite 1 para cachorro e 2 para gato");
-                c = input.nextInt();
+                userInfoInput = input.nextInt();
                 ScannerUtils.cleanBuffer(input);
-                pet.setType(c);
+                pet.setType(userInfoInput);
                 System.out.println("Deseja salvar esta informação?(S/N): " + pet.getType());
-                s = input.nextLine();
+                out = input.nextLine();
             } catch (IllegalStateException e){
                 System.out.println(e.getMessage());
             } catch (InputMismatchException e){
@@ -27,7 +28,7 @@ public record TypePet(String question) implements PetRegistrationOptions {
                 ScannerUtils.cleanBuffer(input);
             }
 
-        } while (!s.equalsIgnoreCase("S"));
+        } while (!out.equalsIgnoreCase("S"));
 
     }
 

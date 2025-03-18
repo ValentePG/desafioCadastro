@@ -10,19 +10,20 @@ public record GenderPet(String question) implements PetRegistrationOptions {
 
     @Override
     public void registerPetInfo(Pet pet, Scanner input) {
-        int c;
-        String s = "n";
+        int infoUserInput;
+        String out = "n";
         do{
             try{
-                c = input.nextInt();
+                System.out.println(getQuestion());
+                infoUserInput = input.nextInt();
                 ScannerUtils.cleanBuffer(input);
-                pet.setGender(c);
-                System.out.println("Deseja salvar esta informação?(S/N): " + pet.getAddress());
-                s = input.nextLine();
+                pet.setGender(infoUserInput);
+                System.out.println("Deseja salvar esta informação?(S/N): " + pet.getGender());
+                out = input.nextLine();
             } catch (IllegalStateException ex){
                 System.out.println(ex.getMessage());
             }
-        }while (!s.equalsIgnoreCase("S"));
+        }while (!out.equalsIgnoreCase("S"));
     }
 
     @Override

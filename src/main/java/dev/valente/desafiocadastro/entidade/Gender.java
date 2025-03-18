@@ -12,7 +12,7 @@ public enum Gender {
         return switch (genderInt) {
             case 1 -> MASCULINO;
             case 2 -> FEMININO;
-            default -> throw new IllegalStateException("Unexpected value");
+            default -> throw new IllegalStateException("Por favor digite 1 para masculino ou 2 para feminino");
         };
     }
 }

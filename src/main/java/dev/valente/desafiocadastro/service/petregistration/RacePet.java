@@ -21,7 +21,6 @@ public record RacePet(String question) implements PetRegistrationOptions {
                 return;
             }
             try{
-                userInfoInput = input.nextLine();
                 assertIfMatchesRegex(userInfoInput);
                 pet.setRace(userInfoInput);
                 System.out.println("Deseja salvar informação?(S/N): " + pet.getRace());

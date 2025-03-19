@@ -2,8 +2,7 @@ package dev.valente.desafiocadastro.entidade;
 
 public class Pet {
 
-    private String firstName;
-    private String lastName;
+    private String fullName;
     private Type type;
     private Gender gender;
     private Address address;
@@ -12,11 +11,17 @@ public class Pet {
     private String race;
 
     public String getFirstName() {
-        return firstName;
+        String[] names = fullName.split(" ");
+        return names[0];
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public String getLastName() {
+        String[] names = fullName.split(" ");
+        return names[1];
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public Gender getGender() {
@@ -67,26 +72,14 @@ public class Pet {
         this.race = race;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public String getFullName() {
-        if(firstName.equals("NÃO INFORMADO")){
-            return "NÃO INFORMADO";
-        }
-        return firstName + " " + lastName;
+        return fullName;
     }
 
     @Override
     public String toString() {
         return "Pet{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                "fullName='" + fullName + '\'' +
                 ", type=" + type +
                 ", gender=" + gender +
                 ", address=" + address +

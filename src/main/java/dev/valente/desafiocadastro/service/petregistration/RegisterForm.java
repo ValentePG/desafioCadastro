@@ -9,9 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class RegisterForm {
 
@@ -34,13 +32,14 @@ public class RegisterForm {
 
         BufferedReader br = new BufferedReader(new FileReader(file));
 
-        String c;
+        String lines;
 
-        while ((c = br.readLine()) != null) {
-            if (!c.isEmpty()) {
+        while ((lines = br.readLine()) != null) {
+            if (!lines.isEmpty()) {
                 count++;
-                PetRegistrationOptions answer = PetRegistrationOptionsFactory.createPetRegistrationOptions(count, c);
-                getMap().put(getCount(), answer);
+                PetRegistrationOptions options = PetRegistrationOptionsFactory
+                        .createPetRegistrationOptions(count, lines);
+                getMap().put(getCount(), options);
             }
         }
 
@@ -72,10 +71,10 @@ public class RegisterForm {
         String fileName = "src/main/java/dev/valente/desafiocadastro/petsCadastrados/" + sb + ".txt";
         File newPetFile = new File(fileName);
         var path = Files.createFile(newPetFile.toPath());
-        preencherTxt(path, pet);
+        fillTxtWithProperties(path, pet);
     }
 
-    private void preencherTxt(Path petFile, Pet pet) throws IOException, IllegalAccessException {
+    private void fillTxtWithProperties(Path petFile, Pet pet) throws IOException, IllegalAccessException {
         BufferedWriter bw = new BufferedWriter(new FileWriter(petFile.toFile(), true));
         Field[] fields = pet.getClass().getDeclaredFields();
         int counter = 0;
@@ -92,6 +91,7 @@ public class RegisterForm {
                     addressBuilder.append(propertiesAddress.toString()).append(", ");
                     addressField.setAccessible(false);
                 }
+                addressBuilder.deleteCharAt(addressBuilder.length() - 2);
                 bw.write(counter + " - " + addressBuilder + "\n");
             } else {
                 var propertie = properties.toString();
@@ -128,7 +128,7 @@ public class RegisterForm {
         System.out.println("Raça do pet: " + pet.getRace());
         System.out.println("Peso do pet: " + pet.getWeight());
         System.out.println("Sexo do pet: " + pet.getGender());
-        System.out.println("Type do pet: " + pet.getType());
+        System.out.println("Tipo do pet: " + pet.getType());
     }
 
     public Map<Integer, PetRegistrationOptions> getMap() {

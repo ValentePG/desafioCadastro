@@ -17,21 +17,15 @@ public record CompleteNamePet(String question) implements PetRegistrationOptions
             System.out.println(getQuestion());
             infoUserInput = input.nextLine();
             if(infoUserInput.isEmpty()){
-                pet.setFirstName(NAO_INFORMADO);
-                pet.setLastName(NAO_INFORMADO);
+                pet.setFullName(NAO_INFORMADO);
                 System.out.println("Nome salvo como: " + NAO_INFORMADO);
                 return;
             }
 
             try {
                 assertIfMatchesRegex(infoUserInput);
-
-                String[] name = infoUserInput.split(" ");
-
-                assertIfLengthIsEqual2(name);
-
-                pet.setFirstName(name[0]);
-                pet.setLastName(name[1]);
+                assertIfLengthIsEqual2(infoUserInput);
+                pet.setFullName(infoUserInput);
                 System.out.println("Deseja salvar esta informação?(S/N) " + pet.getFullName());
                 out = input.nextLine();
 
@@ -53,7 +47,8 @@ public record CompleteNamePet(String question) implements PetRegistrationOptions
         if (!input.matches(regex)) throw new RuntimeException("Apenas letras são válidas aqui!");
     }
 
-    private void assertIfLengthIsEqual2(String[] names){
-        if (!(names.length == 2)) throw new RuntimeException("Por favor digite nome e sobrenome!");
+    private void assertIfLengthIsEqual2(String input){
+        String[] name = input.split(" ");
+        if (!(name.length == 2)) throw new RuntimeException("Por favor digite nome e sobrenome!");
     }
 }

@@ -3,6 +3,7 @@ package dev.valente.desafiocadastro;
 import dev.valente.desafiocadastro.entidade.Pet;
 import dev.valente.desafiocadastro.service.menu.Menu;
 import dev.valente.desafiocadastro.service.petregistration.RegisterForm;
+import dev.valente.desafiocadastro.service.searchpets.SearchPet;
 import dev.valente.desafiocadastro.util.ScannerUtils;
 
 import java.io.IOException;
@@ -27,11 +28,15 @@ public class DesafioCadastro {
                     RegisterForm registerForm = new RegisterForm();
                     Pet novoPet = registerForm.registerPet(sc);
                     registerForm.showPet(novoPet);
+                } else if(input == 2) {
+                    SearchPet petSearch = new SearchPet();
+                    petSearch.searchPet();
                 }
             }catch (InputMismatchException ex){
                 ScannerUtils.cleanBuffer(sc);
                 System.out.println("Por favor insira um número válido!");
             }
         } while (input != 6);
+
     }
 }

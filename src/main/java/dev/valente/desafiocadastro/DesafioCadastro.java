@@ -29,8 +29,17 @@ public class DesafioCadastro {
                     Pet novoPet = registerForm.registerPet(sc);
                     registerForm.showPet(novoPet);
                 } else if(input == 2) {
+
+                } else if(input == 3) {
+
+                } else if(input == 4) {
                     SearchPet petSearch = new SearchPet();
-                    petSearch.searchPet();
+                    var allPets = petSearch.getAllPets();
+                    petSearch.showAllPets(allPets);
+                } else if(input == 5) {
+                    SearchPet petSearch = new SearchPet();
+                    var petsEncountered = petSearch.searchPets();
+                    petSearch.showAllPets(petsEncountered);
                 }
             }catch (InputMismatchException ex){
                 ScannerUtils.cleanBuffer(sc);

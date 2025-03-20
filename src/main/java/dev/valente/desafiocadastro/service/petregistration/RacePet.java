@@ -16,14 +16,14 @@ public record RacePet(String question) implements PetRegistrationOptions {
             System.out.println(getQuestion());
             userInfoInput = input.nextLine();
             if(userInfoInput.isEmpty()){
-                pet.setRace(NAO_INFORMADO);
+                pet.setRaca(NAO_INFORMADO);
                 System.out.println("Raça salvo como: " + NAO_INFORMADO);
                 return;
             }
             try{
                 assertIfMatchesRegex(userInfoInput);
-                pet.setRace(userInfoInput);
-                System.out.println("Deseja salvar informação?(S/N): " + pet.getRace());
+                pet.setRaca(userInfoInput);
+                System.out.println("Deseja salvar informação?(S/N): " + pet.getRaca());
                 out = input.nextLine();
             }catch (RuntimeException e){
                 System.out.println(e.getMessage());

@@ -2,90 +2,90 @@ package dev.valente.desafiocadastro.entidade;
 
 public class Pet {
 
-    private String fullName;
-    private Type type;
-    private Gender gender;
-    private Address address;
-    private float age;
-    private float weight;
-    private String race;
+    private String nomeCompleto;
+    private Type tipo;
+    private Gender genero;
+    private Address endereco;
+    private float idade;
+    private float peso;
+    private String raca;
 
     public String getFirstName() {
-        String[] names = fullName.split(" ");
+        String[] names = nomeCompleto.split(" ");
         return names[0];
     }
 
     public String getLastName() {
-        String[] names = fullName.split(" ");
+        String[] names = nomeCompleto.split(" ");
         return names[1];
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setNomeCompleto(String nomeCompleto) {
+        this.nomeCompleto = nomeCompleto;
     }
 
-    public Gender getGender() {
-        return gender;
+    public Gender getGenero() {
+        return genero;
     }
 
-    public void setGender(int sexoInt) {
-        this.gender = Gender.convertToGender(sexoInt);
+    public void setGenero(int sexoInt) {
+        this.genero = Gender.convertToGender(sexoInt);
     }
 
-    public Type getType() {
-        return type;
+    public Type getTipo() {
+        return tipo;
     }
 
-    public void setType(int tipoInt) {
-        this.type = Type.convertToType(tipoInt);
+    public void setTipo(int tipoInt) {
+        this.tipo = Type.convertToType(tipoInt);
     }
 
-    public Address getAddress() {
-        return address;
+    public Address getEndereco() {
+        return endereco;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setEndereco(Address endereco) {
+        this.endereco = endereco;
     }
 
-    public float getAge() {
-        return age;
+    public float getIdade() {
+        return idade;
     }
 
-    public void setAge(float age) {
-        this.age = age;
+    public void setIdade(float idade) {
+        this.idade = idade;
     }
 
-    public float getWeight() {
-        return weight;
+    public float getPeso() {
+        return peso;
     }
 
-    public void setWeight(float weight) {
-        this.weight = weight;
+    public void setPeso(float peso) {
+        this.peso = peso;
     }
 
-    public String getRace() {
-        return race;
+    public String getRaca() {
+        return raca;
     }
 
-    public void setRace(String race) {
-        this.race = race;
+    public void setRaca(String raca) {
+        this.raca = raca;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getNomeCompleto() {
+        return nomeCompleto;
     }
 
     @Override
     public String toString() {
         return "Pet{" +
-                "fullName='" + fullName + '\'' +
-                ", type=" + type +
-                ", gender=" + gender +
-                ", address=" + address +
-                ", age=" + age +
-                ", weight=" + weight +
-                ", race='" + race + '\'' +
+                "nomeCompleto='" + nomeCompleto + '\'' +
+                ", tipo=" + tipo +
+                ", genero=" + genero +
+                ", endereco=" + endereco +
+                ", idade=" + idade +
+                ", peso=" + peso +
+                ", raca='" + raca + '\'' +
                 '}';
     }
 }

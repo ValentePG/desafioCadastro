@@ -17,7 +17,7 @@ public record CompleteNamePet(String question) implements PetRegistrationOptions
             System.out.println(getQuestion());
             infoUserInput = input.nextLine();
             if(infoUserInput.isEmpty()){
-                pet.setFullName(NAO_INFORMADO);
+                pet.setNomeCompleto(NAO_INFORMADO);
                 System.out.println("Nome salvo como: " + NAO_INFORMADO);
                 return;
             }
@@ -25,8 +25,8 @@ public record CompleteNamePet(String question) implements PetRegistrationOptions
             try {
                 assertIfMatchesRegex(infoUserInput);
                 assertIfLengthIsEqual2(infoUserInput);
-                pet.setFullName(infoUserInput);
-                System.out.println("Deseja salvar esta informação?(S/N) " + pet.getFullName());
+                pet.setNomeCompleto(infoUserInput);
+                System.out.println("Deseja salvar esta informação?(S/N) " + pet.getNomeCompleto());
                 out = input.nextLine();
 
             } catch (RuntimeException e){

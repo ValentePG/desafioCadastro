@@ -17,8 +17,8 @@ public record GenderPet(String question) implements PetRegistrationOptions {
                 System.out.println(getQuestion());
                 infoUserInput = input.nextInt();
                 ScannerUtils.cleanBuffer(input);
-                pet.setGender(infoUserInput);
-                System.out.println("Deseja salvar esta informação?(S/N): " + pet.getGender());
+                pet.setGenero(infoUserInput);
+                System.out.println("Deseja salvar esta informação?(S/N): " + pet.getGenero());
                 out = input.nextLine();
             } catch (IllegalStateException ex){
                 System.out.println(ex.getMessage());

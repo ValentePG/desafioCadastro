@@ -18,8 +18,8 @@ public record TypePet(String question) implements PetRegistrationOptions {
                 System.out.println("Digite 1 para cachorro e 2 para gato");
                 userInfoInput = input.nextInt();
                 ScannerUtils.cleanBuffer(input);
-                pet.setType(userInfoInput);
-                System.out.println("Deseja salvar esta informação?(S/N): " + pet.getType());
+                pet.setTipo(userInfoInput);
+                System.out.println("Deseja salvar esta informação?(S/N): " + pet.getTipo());
                 out = input.nextLine();
             } catch (IllegalStateException e){
                 System.out.println(e.getMessage());

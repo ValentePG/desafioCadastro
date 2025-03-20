@@ -19,8 +19,8 @@ public record WeightPet(String question) implements PetRegistrationOptions {
                 userInfoInput = userInfoInput.replace(",", ".");
                 weight = Float.parseFloat(userInfoInput);
                 assertWeightIsValid(weight);
-                pet.setWeight(weight);
-                System.out.println("Deseja salvar esta informação?(S/N): " + pet.getWeight());
+                pet.setPeso(weight);
+                System.out.println("Deseja salvar esta informação?(S/N): " + pet.getPeso());
                 out = input.nextLine();
             }catch (RuntimeException e){
                 System.out.println(e.getMessage());

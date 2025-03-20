@@ -34,8 +34,8 @@ public record AddressPet(String question) implements PetRegistrationOptions {
             System.out.println("Rua: ");
             infoUserInput = input.nextLine();
             address.setStreet(infoUserInput);
-            pet.setAddress(address);
-            System.out.println("Deseja salvar esta informação?(S/N): " + pet.getAddress());
+            pet.setEndereco(address);
+            System.out.println("Deseja salvar esta informação?(S/N): " + pet.getEndereco());
             out = input.nextLine();
         } while (!out.equalsIgnoreCase("S"));
     }

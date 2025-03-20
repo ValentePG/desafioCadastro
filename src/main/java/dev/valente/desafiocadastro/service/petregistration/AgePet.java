@@ -20,8 +20,8 @@ public record AgePet(String question) implements PetRegistrationOptions {
                 infoUserInput = infoUserInput.replace(",", ".");
                 age = Float.parseFloat(infoUserInput);
                 assertAgeLessThan20(age);
-                pet.setAge(age);
-                System.out.println("Deseja salvar esta informação?(S/N): " + pet.getAge());
+                pet.setIdade(age);
+                System.out.println("Deseja salvar esta informação?(S/N): " + pet.getIdade());
                 out = input.nextLine();
             }catch (RuntimeException e){
                 System.out.println(e.getMessage());

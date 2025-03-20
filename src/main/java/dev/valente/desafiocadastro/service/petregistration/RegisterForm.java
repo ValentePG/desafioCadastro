@@ -67,7 +67,7 @@ public class RegisterForm {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmm");
         LocalDateTime localDateTime = LocalDateTime.now();
         String now = localDateTime.format(formatter);
-        sb.append(now).append("-").append(pet.getFullName().toUpperCase().replace(" ", ""));
+        sb.append(now).append("-").append(pet.getNomeCompleto().toUpperCase().replace(" ", ""));
         String fileName = "src/main/java/dev/valente/desafiocadastro/petsCadastrados/" + sb + ".txt";
         File newPetFile = new File(fileName);
         var path = Files.createFile(newPetFile.toPath());
@@ -102,33 +102,27 @@ public class RegisterForm {
         bw.close();
     }
 
-//    public void alterarPet(Scanner sc){
-//        String c;
-//        int choose;
-//        showRegisterForm();
-//        System.out.print("Escolha qual informação quer cadastrar: ");
-//        choose = sc.nextInt();
-//        sc.nextLine();
-//        PetRegistrationOptions answer = getMap().get(choose);
-//        answer.getQuestion();
-//        answer.registerPetInfo(newPet, sc);
-
-//        System.out.println("===================================");
-//        System.out.println("Deseja salvar as alterações? (S/N)");
-//        c = sc.nextLine();
-//        System.out.println("===================================");
-//    }
-
-    public void showPet(Pet pet){
-        System.out.println("Nome do pet: " + pet.getFullName());
-        System.out.println("Idade do pet: " + pet.getAge());
-        System.out.println("Endereço do pet: " + pet.getAddress().getStreet()
-                + ", " + pet.getAddress().getCity()
-                + ", Nº" + pet.getAddress().getNumber());
-        System.out.println("Raça do pet: " + pet.getRace());
-        System.out.println("Peso do pet: " + pet.getWeight());
-        System.out.println("Sexo do pet: " + pet.getGender());
-        System.out.println("Tipo do pet: " + pet.getType());
+    public void showPet(Pet pet) throws IllegalAccessException {
+        Field[] fields = pet.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+            var fieldName = field.getName();
+            var fieldObject = field.get(pet);
+            var capitalizedFieldName = fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+            if(fieldObject.getClass().getSimpleName().equalsIgnoreCase("address")) {
+                Field[] addressFields = fieldObject.getClass().getDeclaredFields();
+                StringBuilder addressBuilder = new StringBuilder();
+                for (Field addressField : addressFields) {
+                    addressField.setAccessible(true);
+                    var propertiesAddress = addressField.get(fieldObject);
+                    addressBuilder.append(propertiesAddress.toString()).append(", ");
+                    addressField.setAccessible(false);
+                }
+                addressBuilder.deleteCharAt(addressBuilder.length() - 2);
+                System.out.println(capitalizedFieldName + " do pet: " + addressBuilder);
+            }
+            System.out.println(capitalizedFieldName + " do pet: " + fieldObject);
+        }
     }
 
     public Map<Integer, PetRegistrationOptions> getMap() {

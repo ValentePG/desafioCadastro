@@ -1,6 +1,6 @@
 package dev.valente.desafiocadastro.service.petregistration;
 
-import dev.valente.desafiocadastro.entidade.Pet;
+import dev.valente.desafiocadastro.entity.Pet;
 
 import static dev.valente.desafiocadastro.util.Constants.NAO_INFORMADO;
 

@@ -1,9 +1,9 @@
 package dev.valente.desafiocadastro;
 
-import dev.valente.desafiocadastro.entidade.Pet;
-import dev.valente.desafiocadastro.service.menu.Menu;
-import dev.valente.desafiocadastro.service.petregistration.RegisterForm;
-import dev.valente.desafiocadastro.service.searchpets.SearchPet;
+import dev.valente.desafiocadastro.entity.Pet;
+import dev.valente.desafiocadastro.repository.PetRegistrationOptionsRepository;
+import dev.valente.desafiocadastro.repository.PetsRepository;
+import dev.valente.desafiocadastro.service.*;
 import dev.valente.desafiocadastro.util.ScannerUtils;
 
 import java.io.IOException;
@@ -15,7 +15,7 @@ public class DesafioCadastro {
         Scanner sc = new Scanner(System.in);
         int input = 0;
         do{
-            Menu.showMenu();
+            MenuService.showMenu();
             System.out.print("Escolha uma opção: ");
             try{
                 input = sc.nextInt();
@@ -25,19 +25,34 @@ public class DesafioCadastro {
                 }
                 System.out.println("======================================");
                 if (input == 1) {
-                    RegisterForm registerForm = new RegisterForm();
-                    Pet novoPet = registerForm.registerPet(sc);
-                    registerForm.showPet(novoPet);
+                    PetRegistrationOptionsRepository petRegistrationOptionsRepository =
+                            new PetRegistrationOptionsRepository();
+                    RegistrationPetService registrationPetService =
+                            new RegistrationPetService(petRegistrationOptionsRepository);
+                    Pet novoPet = registrationPetService.registerPet(sc);
+                    registrationPetService.showPet(novoPet);
                 } else if(input == 2) {
-
+                    PetsRepository petsRepository = new PetsRepository();
+                    SearchPetService searchPetService = new SearchPetService(petsRepository);
+                    var pets = searchPetService.getAllPets();
+                    searchPetService.showAllPets(pets);
+                    AlterationPetService alterationPetService = new AlterationPetService();
+                    alterationPetService.changePet(pets);
                 } else if(input == 3) {
-
+                    PetsRepository petsRepository = new PetsRepository();
+                    SearchPetService searchPetService = new SearchPetService(petsRepository);
+                    var pets = searchPetService.getAllPets();
+                    searchPetService.showAllPets(pets);
+                    DeletePetService deletePetService = new DeletePetService();
+                    deletePetService.deletePet(pets);
                 } else if(input == 4) {
-                    SearchPet petSearch = new SearchPet();
+                    PetsRepository petsRepository = new PetsRepository();
+                    SearchPetService petSearch = new SearchPetService(petsRepository);
                     var allPets = petSearch.getAllPets();
                     petSearch.showAllPets(allPets);
                 } else if(input == 5) {
-                    SearchPet petSearch = new SearchPet();
+                    PetsRepository petsRepository = new PetsRepository();
+                    SearchPetService petSearch = new SearchPetService(petsRepository);
                     var petsEncountered = petSearch.searchPets();
                     petSearch.showAllPets(petsEncountered);
                 }

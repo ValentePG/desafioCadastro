@@ -1,4 +1,4 @@
-package dev.valente.desafiocadastro.entidade;
+package dev.valente.desafiocadastro.entity;
 
 public class Pet {
 

@@ -1,7 +1,7 @@
 package dev.valente.desafiocadastro.service.petregistration;
 
-import dev.valente.desafiocadastro.entidade.Address;
-import dev.valente.desafiocadastro.entidade.Pet;
+import dev.valente.desafiocadastro.entity.Address;
+import dev.valente.desafiocadastro.entity.Pet;
 import dev.valente.desafiocadastro.util.ScannerUtils;
 
 import java.util.InputMismatchException;

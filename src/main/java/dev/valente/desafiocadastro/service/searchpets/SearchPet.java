@@ -29,7 +29,32 @@ public class SearchPet {
         }
     }
 
-    public void searchPet(){
+    public List<File> getAllPets(){
+        return filesOfPets;
+    }
+
+    public void showAllPets(List<File> files) {
+        int count = 0;
+        StringBuilder sb = new StringBuilder();
+        for(File file : files) {
+            count++;
+            sb.append(count).append(". ");
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                br.lines().forEach(line -> {
+                    sb.append(line, 4, line.length()).append(" - ");
+                });
+            } catch (FileNotFoundException e) {
+                System.out.println(e.getMessage());
+            }
+            sb.deleteCharAt(sb.length() - 2);
+            sb.append("\n");
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        System.out.println(sb);
+    }
+
+    public List<File> searchPets(){
         Scanner scanner = new Scanner(System.in);
         String s;
         System.out.println("Faça uma busca pelo pet de acordo com qualquer uma dessas informações: ");

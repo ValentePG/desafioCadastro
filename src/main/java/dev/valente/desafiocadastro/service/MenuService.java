@@ -1,6 +1,6 @@
-package dev.valente.desafiocadastro.service.menu;
+package dev.valente.desafiocadastro.service;
 
-public class Menu {
+public class MenuService {
 
     public static void showMenu(){
         System.out.println("======================================");

@@ -1,13 +1,12 @@
 package dev.valente.desafiocadastro.service.searchpets;
 
 import dev.valente.desafiocadastro.entidade.Pet;
+import dev.valente.desafiocadastro.util.ScannerUtils;
 
 import java.io.*;
 import java.lang.reflect.Field;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class SearchPet {
 
@@ -57,47 +56,62 @@ public class SearchPet {
     public List<File> searchPets(){
         Scanner scanner = new Scanner(System.in);
         String s;
-        System.out.println("Faça uma busca pelo pet de acordo com qualquer uma dessas informações: ");
+        int c;
+        int count = 0;
+        int criteria = 1;
+        Map<Integer, String> searchOptions = new HashMap<>();
+        Map<Integer, String> searchCriteria = new HashMap<>();
         Pet pet = new Pet();
         Field[] fields = pet.getClass().getDeclaredFields();
+
         for (Field field : fields) {
-            System.out.println(" - " + field.getName());
+            if (!field.getName().equalsIgnoreCase("tipo")) {
+                count++;
+                searchOptions.put(count, field.getName());
+            }
         }
+
+        System.out.println("Seu pet é um cachorro ou gato?");
         s = scanner.nextLine();
+        searchCriteria.put(criteria, s);
+        do{
+            System.out.println("Escolha um critério de busca: ");
+            searchOptions.forEach((k, v) -> {
+                System.out.println(k + ". " + v);
+            });
+            try{
+                c = scanner.nextInt();
+                ScannerUtils.cleanBuffer(scanner);
+                System.out.println("Digite a(o) " + searchOptions.get(c) + " do pet que quer buscar");
+                s = scanner.nextLine();
+                criteria++;
+                searchCriteria.put(criteria, s);
+                System.out.println("Deseja escolher mais um critério de busca? (S/N)");
+                s = scanner.nextLine();
+            }catch (InputMismatchException e){
+                System.out.println("Digite apenas números");
+            }
+
+        } while (s.equalsIgnoreCase("S") || criteria == 3);
+
         List<File> filesEncountered = new ArrayList<>();
 
         filesOfPets.forEach(file -> {
             try {
                 BufferedReader br = new BufferedReader(new FileReader(file));
                 br.lines().forEach(line -> {
-                    if(line.contains(s)){
-                        filesEncountered.add(file);
-                    };
+                    searchCriteria.forEach((k, v) -> {
+                        if(line.contains(v)){
+                            filesEncountered.add(file);
+                        }
+                    });
                 });
                 br.close();
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
-
         });
 
-        StringBuilder sb = new StringBuilder();
-        int count = 0;
-        for (File files : filesEncountered) {
-            count++;
-            sb.append(count).append(". ");
-            try {
-                BufferedReader br = new BufferedReader(new FileReader(files));
-                br.lines().forEach(line -> {
-                    sb.append(line, 4, line.length()).append(" - ");
-                });
-            } catch (FileNotFoundException e) {
-                System.out.println(e.getMessage());
-            }
-            sb.deleteCharAt(sb.length() - 2);
-            sb.append("\n");
-        }
-
-        System.out.println(sb);
+        return filesEncountered;
     }
 }

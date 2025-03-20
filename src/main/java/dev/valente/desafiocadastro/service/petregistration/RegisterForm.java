@@ -21,11 +21,26 @@ public class RegisterForm {
         loadForm();
     }
 
-//    public void showRegisterForm() {
-//        getMap().forEach( (key, value) -> {
-//            value.getQuestion();
-//        });
-//    }
+    public Pet registerPet(Scanner sc) throws IOException, IllegalAccessException {
+        Pet newPet = new Pet();
+        getMap().forEach((key, value) -> {
+            value.registerPetInfo(newPet, sc);
+        });
+        formatNameFile(newPet);
+        return newPet;
+    }
+
+    public void showPet(Pet pet) throws IllegalAccessException {
+        Field[] fields = pet.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+            var fieldName = field.getName();
+            var capitalizedFieldName = fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+            var sb = formatFields(field, pet);
+            System.out.println(capitalizedFieldName + " do pet: " + sb);
+            field.setAccessible(false);
+        }
+    }
 
     private void loadForm() throws IOException {
         File file = new File("src/main/resources/formulario.txt");
@@ -46,23 +61,7 @@ public class RegisterForm {
         br.close();
     }
 
-//    public void adicionarPergunta(String pergunta) throws IOException {
-//        File fw = new File("src/main/resources/formulario.txt");
-//        BufferedWriter bw = new BufferedWriter(new FileWriter(fw, true));
-//        bw.write("\n" + (count+1) + " - " + pergunta);
-//        bw.close();
-//    }
-
-    public Pet registerPet(Scanner sc) throws IOException, IllegalAccessException {
-        Pet newPet = new Pet();
-        getMap().forEach((key, value) -> {
-            value.registerPetInfo(newPet, sc);
-        });
-        registerPetInFile(newPet);
-        return newPet;
-    }
-
-    private void registerPetInFile(Pet pet) throws IOException, IllegalAccessException {
+    private void formatNameFile(Pet pet) throws IOException, IllegalAccessException {
         StringBuilder sb = new StringBuilder();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmm");
         LocalDateTime localDateTime = LocalDateTime.now();
@@ -71,59 +70,57 @@ public class RegisterForm {
         String fileName = "src/main/java/dev/valente/desafiocadastro/petsCadastrados/" + sb + ".txt";
         File newPetFile = new File(fileName);
         var path = Files.createFile(newPetFile.toPath());
-        fillTxtWithProperties(path, pet);
+        registerPetInFiles(path, pet);
     }
 
-    private void fillTxtWithProperties(Path petFile, Pet pet) throws IOException, IllegalAccessException {
+    private void registerPetInFiles(Path petFile, Pet pet) throws IOException, IllegalAccessException {
         BufferedWriter bw = new BufferedWriter(new FileWriter(petFile.toFile(), true));
         Field[] fields = pet.getClass().getDeclaredFields();
         int counter = 0;
         for (Field field : fields) {
             counter++;
-            field.setAccessible(true);
-            var properties = field.get(pet);
-            if(properties.getClass().getSimpleName().equalsIgnoreCase("address")){
-                Field[] addressFields = properties.getClass().getDeclaredFields();
-                StringBuilder addressBuilder = new StringBuilder();
-                for (Field addressField : addressFields) {
-                    addressField.setAccessible(true);
-                    var propertiesAddress = addressField.get(properties);
-                    addressBuilder.append(propertiesAddress.toString()).append(", ");
-                    addressField.setAccessible(false);
-                }
-                addressBuilder.deleteCharAt(addressBuilder.length() - 2);
-                bw.write(counter + " - " + addressBuilder + "\n");
-            } else {
-                var propertie = properties.toString();
-                bw.write(counter + " - " + propertie + "\n");
-            }
-            field.setAccessible(false);
+            var sb = formatFields(field, pet);
+            bw.write(counter + " - " + sb + "\n");
         }
         bw.close();
     }
 
-    public void showPet(Pet pet) throws IllegalAccessException {
-        Field[] fields = pet.getClass().getDeclaredFields();
-        for (Field field : fields) {
-            field.setAccessible(true);
-            var fieldName = field.getName();
-            var fieldObject = field.get(pet);
-            var capitalizedFieldName = fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-            if(fieldObject.getClass().getSimpleName().equalsIgnoreCase("address")) {
-                Field[] addressFields = fieldObject.getClass().getDeclaredFields();
-                StringBuilder addressBuilder = new StringBuilder();
-                for (Field addressField : addressFields) {
-                    addressField.setAccessible(true);
-                    var propertiesAddress = addressField.get(fieldObject);
-                    addressBuilder.append(propertiesAddress.toString()).append(", ");
-                    addressField.setAccessible(false);
-                }
-                addressBuilder.deleteCharAt(addressBuilder.length() - 2);
-                System.out.println(capitalizedFieldName + " do pet: " + addressBuilder);
-            }
-            System.out.println(capitalizedFieldName + " do pet: " + fieldObject);
+    private StringBuilder formatInnerFields(Object field) throws IllegalAccessException {
+        StringBuilder sb = new StringBuilder();
+        Field[] innerFields = field.getClass().getDeclaredFields();
+        for (Field innerField : innerFields) {
+            innerField.setAccessible(true);
+            var innerFieldObject = innerField.get(field);
+            sb.append(innerFieldObject.toString()).append(", ");
+            innerField.setAccessible(false);
         }
+        sb.delete(sb.length() - 2, sb.length());
+        return sb;
     }
+
+    private StringBuilder formatFields(Field field, Pet pet) throws IllegalAccessException {
+        StringBuilder sb;
+        field.setAccessible(true);
+        var fieldObject = field.get(pet);
+        var fieldName = field.getName();
+        var objectSimpleName = fieldObject.getClass().getSimpleName();
+        if(objectSimpleName.equalsIgnoreCase("address")) {
+            sb = formatInnerFields(fieldObject);
+        } else {
+            sb = new StringBuilder();
+            if(fieldName.equalsIgnoreCase("idade")){
+                sb.append(fieldObject).append(" anos");
+            } else if(fieldName.equalsIgnoreCase("peso")){
+                sb.append(fieldObject).append("kg");
+            } else {
+                sb.append(fieldObject);
+            }
+        }
+        field.setAccessible(false);
+        return sb;
+    }
+
+
 
     public Map<Integer, PetRegistrationOptions> getMap() {
         return map;

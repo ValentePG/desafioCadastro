@@ -1,7 +1,8 @@
-package dev.valente.desafiocadastro.service.petregistration;
+package dev.valente.desafiocadastro.service;
 
-import dev.valente.desafiocadastro.entidade.Pet;
-import dev.valente.desafiocadastro.factory.PetRegistrationOptionsFactory;
+import dev.valente.desafiocadastro.entity.Pet;
+import dev.valente.desafiocadastro.repository.PetRegistrationOptionsRepository;
+import dev.valente.desafiocadastro.service.petregistration.PetRegistrationOptions;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -11,19 +12,17 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class RegisterForm {
+public class RegistrationPetService {
 
-    private final Map<Integer, PetRegistrationOptions> map;
-    private int count;
+    private final PetRegistrationOptionsRepository petRegistrationOptionsRepository;
 
-    public RegisterForm() throws IOException {
-        this.map = new HashMap<>();
-        loadForm();
+    public RegistrationPetService(PetRegistrationOptionsRepository petRegistrationOptionsRepository) {
+        this.petRegistrationOptionsRepository = petRegistrationOptionsRepository;
     }
 
     public Pet registerPet(Scanner sc) throws IOException, IllegalAccessException {
         Pet newPet = new Pet();
-        getMap().forEach((key, value) -> {
+        getPetRegistrationOptions().forEach((key, value) -> {
             value.registerPetInfo(newPet, sc);
         });
         formatNameFile(newPet);
@@ -40,25 +39,6 @@ public class RegisterForm {
             System.out.println(capitalizedFieldName + " do pet: " + sb);
             field.setAccessible(false);
         }
-    }
-
-    private void loadForm() throws IOException {
-        File file = new File("src/main/resources/formulario.txt");
-
-        BufferedReader br = new BufferedReader(new FileReader(file));
-
-        String lines;
-
-        while ((lines = br.readLine()) != null) {
-            if (!lines.isEmpty()) {
-                count++;
-                PetRegistrationOptions options = PetRegistrationOptionsFactory
-                        .createPetRegistrationOptions(count, lines);
-                getMap().put(getCount(), options);
-            }
-        }
-
-        br.close();
     }
 
     private void formatNameFile(Pet pet) throws IOException, IllegalAccessException {
@@ -120,14 +100,8 @@ public class RegisterForm {
         return sb;
     }
 
-
-
-    public Map<Integer, PetRegistrationOptions> getMap() {
-        return map;
-    }
-
-    public int getCount() {
-        return count;
+    public Map<Integer, PetRegistrationOptions> getPetRegistrationOptions() {
+        return petRegistrationOptionsRepository.getPetRegistrationOptions();
     }
 
 }

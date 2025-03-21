@@ -4,6 +4,7 @@ import dev.valente.desafiocadastro.entity.Pet;
 import dev.valente.desafiocadastro.repository.PetRegistrationOptionsRepository;
 import dev.valente.desafiocadastro.repository.PetsRepository;
 import dev.valente.desafiocadastro.service.*;
+import dev.valente.desafiocadastro.service.petalteration.AlterationPetService;
 import dev.valente.desafiocadastro.util.ScannerUtils;
 
 import java.io.IOException;
@@ -36,7 +37,8 @@ public class DesafioCadastro {
                     SearchPetService searchPetService = new SearchPetService(petsRepository);
                     var pets = searchPetService.getAllPets();
                     searchPetService.showAllPets(pets);
-                    AlterationPetService alterationPetService = new AlterationPetService();
+                    AlterationPetService alterationPetService =
+                            new AlterationPetService();
                     alterationPetService.changePet(pets);
                 } else if(input == 3) {
                     PetsRepository petsRepository = new PetsRepository();

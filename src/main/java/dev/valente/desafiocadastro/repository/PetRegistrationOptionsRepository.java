@@ -24,9 +24,9 @@ public class PetRegistrationOptionsRepository {
     }
 
     private void loadForm() throws IOException {
-        File file = new File("src/main/resources/formulario.txt");
+        File fileOfFormulario = new File("src/main/resources/formulario.txt");
         int count = 0;
-        BufferedReader br = new BufferedReader(new FileReader(file));
+        BufferedReader br = new BufferedReader(new FileReader(fileOfFormulario));
 
         String lines;
 

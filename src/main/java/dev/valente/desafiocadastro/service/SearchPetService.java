@@ -1,7 +1,6 @@
 package dev.valente.desafiocadastro.service;
 
 import dev.valente.desafiocadastro.entity.Pet;
-import dev.valente.desafiocadastro.repository.PetsRepository;
 import dev.valente.desafiocadastro.util.ScannerUtils;
 
 import java.io.BufferedReader;
@@ -13,12 +12,12 @@ import java.util.*;
 
 public class SearchPetService {
 
-    private final PetsRepository petsRepository;
+    private final PetsService petsService;
 
     private final Map<Integer, String> criteriaOptions;
 
-    public SearchPetService(PetsRepository petsRepository){
-        this.petsRepository = petsRepository;
+    public SearchPetService(PetsService petsService) {
+        this.petsService = petsService;
         this.criteriaOptions = new HashMap<>();
         loadCriteriaOptions();
     }
@@ -27,41 +26,15 @@ public class SearchPetService {
         return criteriaOptions;
     }
 
-    public List<File> getAllPets() {
-        return petsRepository.getFilesOfPets();
-    }
-
-    public void showAllPets(List<File> files) {
-        int count = 0;
-        StringBuilder sb = new StringBuilder();
-        for (File file : files) {
-            count++;
-            sb.append(count).append(". ");
-            try {
-                BufferedReader br = new BufferedReader(new FileReader(file));
-                br.lines().forEach(line -> {
-                    sb.append(line, 4, line.length()).append(" - ");
-                });
-                br.close();
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-            sb.deleteCharAt(sb.length() - 2);
-            sb.append("\n");
-        }
-        sb.deleteCharAt(sb.length() - 1);
-        System.out.println(sb);
-    }
-
     public List<File> searchPets() {
         var searchCriteria = getCriteriaFromUser();
 
-        var filesOfPets = petsRepository.getFilesOfPets();
+        var filesOfPets = petsService.getAllPets();
 
         return searchPetsByCriteria(filesOfPets, searchCriteria);
     }
 
-    private Map<Integer, String> getCriteriaFromUser(){
+    private Map<Integer, String> getCriteriaFromUser() {
         Scanner scanner = new Scanner(System.in);
         String inputUserString;
         int InputUserInt;
@@ -95,7 +68,7 @@ public class SearchPetService {
 
     private List<File> searchPetsByCriteria(List<File> filesOfPets, Map<Integer, String> criterias) {
         List<File> filesEncountered = new ArrayList<>();
-        for(File file : filesOfPets) {
+        for (File file : filesOfPets) {
             try {
                 BufferedReader br = new BufferedReader(new FileReader(file));
                 br.lines().forEach(line -> {
@@ -127,7 +100,7 @@ public class SearchPetService {
         }
     }
 
-    private void showAvailableCriterias(Map<Integer, String> criterias){
+    private void showAvailableCriterias(Map<Integer, String> criterias) {
         criterias.forEach((key, criteria) -> {
             System.out.println(key + ". " + criteria);
         });

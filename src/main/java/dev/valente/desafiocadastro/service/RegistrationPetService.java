@@ -22,8 +22,8 @@ public class RegistrationPetService {
 
     public Pet registerPet(Scanner sc) throws IOException, IllegalAccessException {
         Pet newPet = new Pet();
-        getPetRegistrationOptions().forEach((key, value) -> {
-            value.registerPetInfo(newPet, sc);
+        getPetRegistrationOptions().forEach((key, options) -> {
+            options.registerPetInfo(newPet, sc);
         });
         formatNameFile(newPet);
         return newPet;

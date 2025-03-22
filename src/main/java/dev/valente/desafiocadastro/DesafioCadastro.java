@@ -30,41 +30,41 @@ public class DesafioCadastro {
                 System.out.println("======================================");
                 switch (input){
                     case 1 -> {
-                        PetRegistrationOptionsRepository petRegistrationOptionsRepository =
+                        PetRegistrationOptionsRepository registrationRepository =
                                 new PetRegistrationOptionsRepository();
                         RegistrationPetService registrationPetService =
-                                new RegistrationPetService(petRegistrationOptionsRepository);
+                                new RegistrationPetService(registrationRepository);
                         Pet novoPet = registrationPetService.registerPet(sc);
                         registrationPetService.showPet(novoPet);
                     }
                     case 2 -> {
                         PetsRepository petsRepository = new PetsRepository();
-                        SearchPetService searchPetService = new SearchPetService(petsRepository);
-                        var pets = searchPetService.getAllPets();
-                        searchPetService.showAllPets(pets);
+                        PetsService petsService = new PetsService(petsRepository);
+                        var pets = petsService.getAllPets();
+                        petsService.showAllPets();
                         AlterationPetService alterationPetService =
                                 new AlterationPetService();
                         alterationPetService.changePet(pets);
                     }
                     case 3 -> {
                         PetsRepository petsRepository = new PetsRepository();
-                        SearchPetService searchPetService = new SearchPetService(petsRepository);
-                        var pets = searchPetService.getAllPets();
-                        searchPetService.showAllPets(pets);
+                        PetsService petsService = new PetsService(petsRepository);
+                        var pets = petsService.getAllPets();
+                        petsService.showAllPets();
                         DeletePetService deletePetService = new DeletePetService();
                         deletePetService.deletePet(pets);
                     }
                     case 4 -> {
                         PetsRepository petsRepository = new PetsRepository();
-                        SearchPetService petSearch = new SearchPetService(petsRepository);
-                        var allPets = petSearch.getAllPets();
-                        petSearch.showAllPets(allPets);
+                        PetsService petsService = new PetsService(petsRepository);
+                        petsService.showAllPets();
                     }
                     case 5 -> {
                         PetsRepository petsRepository = new PetsRepository();
-                        SearchPetService petSearch = new SearchPetService(petsRepository);
+                        PetsService petsService = new PetsService(petsRepository);
+                        SearchPetService petSearch = new SearchPetService(petsService);
                         var petsEncountered = petSearch.searchPets();
-                        petSearch.showAllPets(petsEncountered);
+                        petsService.showAllPets(petsEncountered);
                     }
                 }
             }catch (InputMismatchException ex){

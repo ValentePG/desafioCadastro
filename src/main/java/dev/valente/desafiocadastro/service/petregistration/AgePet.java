@@ -7,7 +7,7 @@ import java.util.Scanner;
 public record AgePet(String question) implements PetRegistrationOptions {
 
     @Override
-    public void registerPetInfo(Pet pet, Scanner input) {
+    public void registerPetInfo(Pet pet, Scanner scanner) {
         float age;
         String infoUserInput;
         String out = "n";
@@ -15,14 +15,14 @@ public record AgePet(String question) implements PetRegistrationOptions {
             try{
                 System.out.println(getQuestion());
                 System.out.println("Caso a idade seja menor que 1 ano digite 0 seguido pelos meses do seu Pet");
-                infoUserInput = input.nextLine();
+                infoUserInput = scanner.nextLine();
                 assertMatchesWithRegex(infoUserInput);
                 infoUserInput = infoUserInput.replace(",", ".");
                 age = Float.parseFloat(infoUserInput);
                 assertAgeLessThan20(age);
                 pet.setIdade(age);
                 System.out.println("Deseja salvar esta informação?(S/N): " + pet.getIdade());
-                out = input.nextLine();
+                out = scanner.nextLine();
             }catch (RuntimeException e){
                 System.out.println(e.getMessage());
             }

@@ -13,20 +13,20 @@ public class DeletePetService {
 
     public void deletePet(List<File> fileToDelete) throws IOException {
         Scanner scanner = new Scanner(System.in);
-        String input = "n";
-        int in = 0;
+        String inputUserString = "n";
+        int inputUserInt = 0;
         do {
             try {
                 System.out.println("Qual pet você quer excluir?");
-                in = scanner.nextInt();
+                inputUserInt = scanner.nextInt();
                 ScannerUtils.cleanBuffer(scanner);
-                in -= 1;
-                assertIfInIsGreaterThanSizeOfList(in, fileToDelete);
+                inputUserInt -= 1;
+                assertIfInIsGreaterThanSizeOfList(inputUserInt, fileToDelete);
                 System.out.println("Tem certeza que deseja excluir (S/N): ");
-                input = scanner.nextLine();
-                if (input.equalsIgnoreCase("S")) {
-                    var file = fileToDelete.remove(in);
-                    Files.deleteIfExists(file.toPath());
+                inputUserString = scanner.nextLine();
+                if (inputUserString.equalsIgnoreCase("S")) {
+                    var removedFile = fileToDelete.remove(inputUserInt);
+                    Files.deleteIfExists(removedFile.toPath());
                     System.out.println("Deletado com sucesso!");
                 }
             } catch (InputMismatchException ex) {
@@ -36,11 +36,11 @@ public class DeletePetService {
                 System.out.println(ex.getMessage());
             }
 
-        } while (!input.equalsIgnoreCase("s"));
+        } while (!inputUserString.equalsIgnoreCase("s"));
 
     }
 
     private void assertIfInIsGreaterThanSizeOfList(int input, List<File> fileToCheck) {
-        if(input > fileToCheck.size()) throw new RuntimeException("Digite um valor dos que foram mostrados na tela");
+        if (input > fileToCheck.size()) throw new RuntimeException("Digite um valor dos que foram mostrados na tela");
     }
 }

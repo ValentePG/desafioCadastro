@@ -8,10 +8,10 @@ import java.util.List;
 
 public class PetsRepository {
 
-    private final List<File> filesOfPets;
+    private final List<File> filesOfRegisteredPets;
 
     public PetsRepository() throws IOException {
-        this.filesOfPets = new ArrayList<>();
+        this.filesOfRegisteredPets = new ArrayList<>();
         loadFilesOfPets();
     }
 
@@ -21,12 +21,12 @@ public class PetsRepository {
             filesInDir.forEach(path -> {
                 var absolutePath = path.toFile().getAbsolutePath();
                 File eachFile = new File(absolutePath);
-                filesOfPets.add(eachFile);
+                filesOfRegisteredPets.add(eachFile);
             });
         }
     }
 
-    public List<File> getFilesOfPets() {
-        return filesOfPets;
+    public List<File> getFilesOfRegisteredPets() {
+        return filesOfRegisteredPets;
     }
 }

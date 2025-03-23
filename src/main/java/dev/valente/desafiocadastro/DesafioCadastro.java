@@ -62,7 +62,7 @@ public class DesafioCadastro {
                     case 5 -> {
                         PetsRepository petsRepository = new PetsRepository();
                         PetsService petsService = new PetsService(petsRepository);
-                        SearchPetService petSearch = new SearchPetService(petsService);
+                        SearchPetService petSearch = new SearchPetService(petsRepository);
                         var petsEncountered = petSearch.searchPets();
                         petsService.showAllPets(petsEncountered);
                     }

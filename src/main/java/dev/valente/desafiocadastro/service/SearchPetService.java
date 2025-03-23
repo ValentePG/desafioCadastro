@@ -1,6 +1,7 @@
 package dev.valente.desafiocadastro.service;
 
 import dev.valente.desafiocadastro.entity.Pet;
+import dev.valente.desafiocadastro.repository.PetsRepository;
 import dev.valente.desafiocadastro.util.ScannerUtils;
 
 import java.io.BufferedReader;
@@ -12,12 +13,12 @@ import java.util.*;
 
 public class SearchPetService {
 
-    private final PetsService petsService;
+    private final PetsRepository petsRepository;
 
     private final Map<Integer, String> criteriaOptions;
 
-    public SearchPetService(PetsService petsService) {
-        this.petsService = petsService;
+    public SearchPetService(PetsRepository petsRepository) {
+        this.petsRepository = petsRepository;
         this.criteriaOptions = new HashMap<>();
         loadCriteriaOptions();
     }
@@ -29,7 +30,7 @@ public class SearchPetService {
     public List<File> searchPets() {
         var searchCriteria = getCriteriaFromUser();
 
-        var filesOfPets = petsService.getAllPets();
+        var filesOfPets = petsRepository.getFilesOfRegisteredPets();
 
         return searchPetsByCriteria(filesOfPets, searchCriteria);
     }
@@ -69,17 +70,15 @@ public class SearchPetService {
     private List<File> searchPetsByCriteria(List<File> filesOfPets, Map<Integer, String> criterias) {
         List<File> filesEncountered = new ArrayList<>();
         for (File file : filesOfPets) {
-            try {
-                BufferedReader br = new BufferedReader(new FileReader(file));
+            try(BufferedReader br = new BufferedReader(new FileReader(file))){
                 br.lines().forEach(line -> {
                     criterias.forEach((k, v) -> {
-                        if (line.toLowerCase().contains(v)) {
-                            filesEncountered.add(file);
-                        }
+                        if (line.toLowerCase().contains(v))
+                            if(!filesEncountered.contains(file))
+                                filesEncountered.add(file);
                     });
 
                 });
-                br.close();
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }

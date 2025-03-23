@@ -16,10 +16,6 @@ public class PetsService {
         this.petsRepository = petsRepository;
     }
 
-    public void removePet(){
-
-    }
-
     public void showAllPets(){
         var files = getAllPets();
         int count = 0;
@@ -49,12 +45,10 @@ public class PetsService {
         for (File file : files) {
             count++;
             sb.append(count).append(". ");
-            try {
-                BufferedReader br = new BufferedReader(new FileReader(file));
+            try(BufferedReader br = new BufferedReader(new FileReader(file))){
                 br.lines().forEach(line -> {
                     sb.append(line, 4, line.length()).append(" - ");
                 });
-                br.close();
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }

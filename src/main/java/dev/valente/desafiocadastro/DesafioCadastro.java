@@ -40,17 +40,16 @@ public class DesafioCadastro {
                     case 2 -> {
                         PetsRepository petsRepository = new PetsRepository();
                         PetsService petsService = new PetsService(petsRepository);
-                        var pets = petsService.getAllPets();
                         petsService.showAllPets();
-                        AlterationPetService alterationPetService =
-                                new AlterationPetService();
-                        alterationPetService.changePet(pets);
+                        var pet = petsService.selectPet();
+                        var fileChanged = petsService.alteratePet(pet);
+                        petsService.showPetFromFile(fileChanged);
                     }
                     case 3 -> {
                         PetsRepository petsRepository = new PetsRepository();
                         PetsService petsService = new PetsService(petsRepository);
                         petsService.showAllPets();
-                        var pet = petsService.searchPet();
+                        var pet = petsService.selectPet();
                         petsService.deletePet(pet);
                     }
                     case 4 -> {
@@ -62,7 +61,7 @@ public class DesafioCadastro {
                         PetsRepository petsRepository = new PetsRepository();
                         PetsService petsService = new PetsService(petsRepository);
                         var petsEncountered = petsService.searchPets();
-                        petsService.showAllPets(petsEncountered);
+                        petsService.showPetsFromFile(petsEncountered);
                     }
                 }
             }catch (InputMismatchException ex){

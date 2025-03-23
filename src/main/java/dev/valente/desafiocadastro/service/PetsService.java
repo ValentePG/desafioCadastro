@@ -1,12 +1,10 @@
 package dev.valente.desafiocadastro.service;
 
 import dev.valente.desafiocadastro.repository.PetsRepository;
+import dev.valente.desafiocadastro.service.petalteration.AlterationPetService;
 import dev.valente.desafiocadastro.util.ScannerUtils;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -22,28 +20,10 @@ public class PetsService {
 
     public void showAllPets(){
         var files = getAllPets();
-        int count = 0;
-        StringBuilder sb = new StringBuilder();
-        for (File file : files) {
-            count++;
-            sb.append(count).append(". ");
-            try {
-                BufferedReader br = new BufferedReader(new FileReader(file));
-                br.lines().forEach(line -> {
-                    sb.append(line, 4, line.length()).append(" - ");
-                });
-                br.close();
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-            sb.deleteCharAt(sb.length() - 2);
-            sb.append("\n");
-        }
-        sb.deleteCharAt(sb.length() - 1);
-        System.out.println(sb);
+        showPetsFromFile(files);
     }
 
-    public void showAllPets(List<File> files){
+    public void showPetsFromFile(List<File> files){
         int count = 0;
         StringBuilder sb = new StringBuilder();
         for (File file : files) {
@@ -60,6 +40,19 @@ public class PetsService {
             sb.append("\n");
         }
         sb.deleteCharAt(sb.length() - 1);
+        System.out.println(sb);
+    }
+
+    public void showPetFromFile(File file){
+        StringBuilder sb = new StringBuilder();
+        try(BufferedReader br = new BufferedReader(new FileReader(file))){
+            br.lines().forEach(line -> {
+                sb.append(line, 4, line.length()).append(" - ");
+            });
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        sb.deleteCharAt(sb.length() - 2);
         System.out.println(sb);
     }
 
@@ -87,7 +80,11 @@ public class PetsService {
         return searchPetService.searchPets();
     }
 
-    public File searchPet(){
+    public File alteratePet(File fileToAlterate){
+        return AlterationPetService.changeInfoFromPet(fileToAlterate);
+    }
+
+    public File selectPet(){
         var allPets = getAllPets();
         File fileToReturn = null;
         Scanner scanner = new Scanner(System.in);

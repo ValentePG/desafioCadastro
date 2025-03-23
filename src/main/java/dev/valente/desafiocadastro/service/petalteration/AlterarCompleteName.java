@@ -11,21 +11,25 @@ public class AlterarCompleteName implements AlterarInfoIT {
         Scanner scanner = new Scanner(System.in);
         StringBuilder sb = new StringBuilder();
         String infoUserInput;
-        String out;
+        String out = "n";
         do{
-            System.out.println("Insira o nome completo do pet");
-            infoUserInput = scanner.nextLine();
-            sb.append(infoUserInput);
-            if(infoUserInput.isEmpty()){
-                System.out.println("Nome salvo como: " + NAO_INFORMADO);
-                return NAO_INFORMADO;
+            try {
+                System.out.println("Insira o nome completo do pet");
+                infoUserInput = scanner.nextLine();
+                sb.append(infoUserInput);
+                if(infoUserInput.isEmpty()){
+                    System.out.println("Nome salvo como: " + NAO_INFORMADO);
+                    return NAO_INFORMADO;
+                }
+                assertIfMatchesRegex(infoUserInput);
+
+                assertIfLengthIsEqual2(infoUserInput);
+
+                System.out.println("Deseja salvar esta informação?(S/N) " + infoUserInput);
+                out = scanner.nextLine();
+            } catch (RuntimeException e) {
+                System.out.println(e.getMessage());
             }
-            assertIfMatchesRegex(infoUserInput);
-
-            assertIfLengthIsEqual2(infoUserInput);
-
-            System.out.println("Deseja salvar esta informação?(S/N) " + infoUserInput);
-            out = scanner.nextLine();
         } while (!out.equalsIgnoreCase("S"));
         return sb.toString().trim();
     }

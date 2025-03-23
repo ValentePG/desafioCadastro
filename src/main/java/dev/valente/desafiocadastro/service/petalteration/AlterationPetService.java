@@ -11,85 +11,82 @@ import java.util.Scanner;
 
 public class AlterationPetService {
 
-    public void changePet(List<File> fileToAlterate) {
-        Scanner scanner = new Scanner(System.in);
-        String input = "n";
-        File inputFile;
-        int in = 0;
-        do {
-            try {
-                System.out.println("Qual pet você quer alterar?");
-                in = scanner.nextInt();
-                ScannerUtils.cleanBuffer(scanner);
-                in -= 1;
-                assertIfInIsGreaterThanSizeOfList(in, fileToAlterate);
-                inputFile = fileToAlterate.get(in);
-                changingPet(inputFile);
-                System.out.println("Confirmar Alterações?(S/N): ");
-                input = scanner.nextLine();
-            } catch (InputMismatchException ex) {
-                System.out.println("Por favor digite um número válido e de 1 a " + fileToAlterate.size());
-                ScannerUtils.cleanBuffer(scanner);
-            } catch (RuntimeException | FileNotFoundException ex) {
-                System.out.println(ex.getMessage());
-            }
-
-        } while (!input.equalsIgnoreCase("s"));
-
+    public static File changeInfoFromPet(File fileToAlterate) {
+        rewriteFileWithNewInfo(fileToAlterate);
+        return fileToAlterate;
     }
 
-    private void assertIfInIsGreaterThanSizeOfList(int input, List<File> fileToCheck) {
-        if (input > fileToCheck.size()) throw new RuntimeException("Digite um valor dos que foram mostrados na tela");
-    }
-
-    private void changingPet(File fileToAlterate) throws FileNotFoundException {
-        String line;
-        Scanner scanner = new Scanner(System.in);
-        List<String> list = new ArrayList<>();
-        int in = 0;
+    private static void rewriteFileWithNewInfo(File fileToAlterate) {
+        var linesList = getListWithLinesFromFile(fileToAlterate);
+        var tamanhoLista = linesList.size();
         int count = 0;
-
-        try (BufferedReader rd = new BufferedReader(new FileReader(fileToAlterate))) {
-            while ((line = rd.readLine()) != null) {
-                list.add(line);
-            }
-        } catch (IOException | InputMismatchException e) {
-            System.out.println(e.getMessage());
-        }
-
-        for (String linhas : list) {
-            count++;
-            System.out.println(count + " - " + linhas.substring(4));
-        }
-        var tamanhoLista = list.size();
-        System.out.println("Qual informação você quer alterar?");
-        in = scanner.nextInt();
-        ScannerUtils.cleanBuffer(scanner);
-        assertIfOptionExist(in, tamanhoLista);
-        var alterarFunction = PetAlterationOptionsFactory.createAlterarInfoIT(in);
-        var info = alterarFunction.alterarInfoInFile();
-        in -= 1;
-        count = 0;
+        int inputUserInt = getChoosedOption(linesList);
+        var infoToChange = getInfoToChangeFromUser(inputUserInt);
+        inputUserInt -= 1;
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileToAlterate))) {
             while (count <= tamanhoLista - 1) {
-                if (count == in) {
+                if (count == inputUserInt) {
                     if (count == 0) {
-                        bw.write(count + 1 + " - " + info + "\n");
+                        bw.write(count + 1 + " - " + infoToChange + "\n");
                     } else {
-                        bw.write(count + " - " + info + "\n");
+                        bw.write(count + " - " + infoToChange + "\n");
                     }
                 } else {
-                    bw.write(list.get(count) + "\n");
+                    bw.write(linesList.get(count) + "\n");
                 }
                 count++;
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-
     }
 
-    private void assertIfOptionExist(int input, int tamanhoLista) {
+    private static int getChoosedOption(List<String> options) {
+        Scanner scanner = new Scanner(System.in);
+        int tamanhoLista = options.size();
+        int inputUserInt = 0;
+        showOptions(options);
+        System.out.println("Qual informação você quer alterar?");
+        try {
+            inputUserInt = scanner.nextInt();
+            ScannerUtils.cleanBuffer(scanner);
+            assertIfOptionExist(inputUserInt, tamanhoLista);
+        } catch (InputMismatchException ex) {
+            ScannerUtils.cleanBuffer(scanner);
+            System.out.println(ex.getMessage());
+        } catch (RuntimeException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return inputUserInt;
+    }
+
+    private static String getInfoToChangeFromUser(int input) {
+        var alterarFunction = PetAlterationOptionsFactory.createAlterarInfoIT(input);
+        return alterarFunction.alterarInfoInFile();
+    }
+
+    private static void showOptions(List<String> options) {
+        int count = 0;
+        for (String linhas : options) {
+            count++;
+            System.out.println(count + " - " + linhas.substring(4));
+        }
+    }
+
+    private static List<String> getListWithLinesFromFile(File fileToAlterate) {
+        String line;
+        List<String> linesList = new ArrayList<>();
+        try (BufferedReader rd = new BufferedReader(new FileReader(fileToAlterate))) {
+            while ((line = rd.readLine()) != null) {
+                linesList.add(line);
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return linesList;
+    }
+
+    private static void assertIfOptionExist(int input, int tamanhoLista) {
         if (input > tamanhoLista || input <= 0) throw new RuntimeException("Erro");
     }
 }

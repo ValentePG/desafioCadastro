@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import static dev.valente.desafiocadastro.util.Constants.NAO_INFORMADO;
 
-public class AlterarRace implements AlterarInfoIT{
+public class RacePetAlteration implements IAlterationPetOptions {
 
     @Override
     public String alterarInfoInFile() {

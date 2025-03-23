@@ -4,13 +4,13 @@ import dev.valente.desafiocadastro.service.petalteration.*;
 
 public class PetAlterationOptionsFactory {
 
-    public static AlterarInfoIT createAlterarInfoIT(int choose) {
+    public static IAlterationPetOptions createAlterarInfoIT(int choose) {
         return switch (choose) {
-            case 1 -> new AlterarCompleteName();
-            case 4 -> new AlterarAddress();
-            case 5 -> new AlterarAge();
-            case 6 -> new AlterarWeight();
-            case 7 -> new AlterarRace();
+            case 1 -> new CompleteNameAlteration();
+            case 4 -> new AddressPetAlteration();
+            case 5 -> new AgePetAlteration();
+            case 6 -> new WeightPetAlteration();
+            case 7 -> new RacePetAlteration();
             default -> throw new IllegalArgumentException("Invalid choose");
         };
     }

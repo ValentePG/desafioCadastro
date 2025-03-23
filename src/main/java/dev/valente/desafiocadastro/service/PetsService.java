@@ -1,7 +1,7 @@
 package dev.valente.desafiocadastro.service;
 
 import dev.valente.desafiocadastro.repository.PetsRepository;
-import dev.valente.desafiocadastro.service.petalteration.AlterationPetService;
+import dev.valente.desafiocadastro.service.petalteration.PetServiceAlteration;
 import dev.valente.desafiocadastro.util.ScannerUtils;
 
 import java.io.*;
@@ -81,7 +81,7 @@ public class PetsService {
     }
 
     public File alteratePet(File fileToAlterate){
-        return AlterationPetService.changeInfoFromPet(fileToAlterate);
+        return PetServiceAlteration.changeInfoFromPet(fileToAlterate);
     }
 
     public File selectPet(){

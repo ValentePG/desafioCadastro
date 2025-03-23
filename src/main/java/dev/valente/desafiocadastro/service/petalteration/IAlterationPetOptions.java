@@ -1,6 +1,6 @@
 package dev.valente.desafiocadastro.service.petalteration;
 
-public interface AlterarInfoIT {
+public interface IAlterationPetOptions {
 
     String alterarInfoInFile();
 }

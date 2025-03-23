@@ -4,7 +4,6 @@ import dev.valente.desafiocadastro.entity.Pet;
 import dev.valente.desafiocadastro.repository.PetRegistrationOptionsRepository;
 import dev.valente.desafiocadastro.repository.PetsRepository;
 import dev.valente.desafiocadastro.service.*;
-import dev.valente.desafiocadastro.service.petalteration.AlterationPetService;
 import dev.valente.desafiocadastro.util.ScannerUtils;
 
 import java.io.IOException;

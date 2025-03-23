@@ -9,7 +9,7 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-public class AlterationPetService {
+public class PetServiceAlteration {
 
     public static File changeInfoFromPet(File fileToAlterate) {
         rewriteFileWithNewInfo(fileToAlterate);

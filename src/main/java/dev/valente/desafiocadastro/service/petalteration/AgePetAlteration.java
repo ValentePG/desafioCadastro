@@ -1,38 +1,33 @@
-package dev.valente.desafiocadastro.service.petregistration;
-
-import dev.valente.desafiocadastro.entity.Pet;
+package dev.valente.desafiocadastro.service.petalteration;
 
 import java.util.Scanner;
 
-public record AgePet(String question) implements PetRegistrationOptions {
+public class AgePetAlteration implements IAlterationPetOptions {
 
     @Override
-    public void registerPetInfo(Pet pet, Scanner scanner) {
+    public String alterarInfoInFile() {
+        Scanner input = new Scanner(System.in);
+        StringBuilder sb = new StringBuilder();
         float age;
         String infoUserInput;
         String out = "n";
         do{
             try{
-                System.out.println(getQuestion());
+                System.out.println("Altere a sua idade");
                 System.out.println("Caso a idade seja menor que 1 ano digite 0 seguido pelos meses do seu Pet");
-                infoUserInput = scanner.nextLine();
+                infoUserInput = input.nextLine();
                 assertMatchesWithRegex(infoUserInput);
                 infoUserInput = infoUserInput.replace(",", ".");
                 age = Float.parseFloat(infoUserInput);
                 assertAgeLessThan20(age);
-                pet.setIdade(age);
-                System.out.println("Deseja salvar esta informação?(S/N): " + pet.getIdade());
-                out = scanner.nextLine();
+                sb.append(age).append(" anos");
+                System.out.println("Deseja salvar esta informação?(S/N): " + age);
+                out = input.nextLine();
             }catch (RuntimeException e){
                 System.out.println(e.getMessage());
             }
         } while (!out.equalsIgnoreCase("S"));
-
-    }
-
-    @Override
-    public String getQuestion() {
-        return this.question;
+        return sb.toString().trim();
     }
 
     private void assertMatchesWithRegex(String input) {

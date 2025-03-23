@@ -6,7 +6,7 @@ import static dev.valente.desafiocadastro.util.Constants.NAO_INFORMADO;
 
 import java.util.Scanner;
 
-public record CompleteNamePet(String question) implements PetRegistrationOptions {
+public record CompleteNamePetRegistration(String question) implements PetRegistrationOptions {
 
     @Override
     public void registerPetInfo(Pet pet, Scanner input) {

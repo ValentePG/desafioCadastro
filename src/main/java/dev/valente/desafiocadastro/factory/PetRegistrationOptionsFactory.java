@@ -7,13 +7,13 @@ public class PetRegistrationOptionsFactory {
 
     public static PetRegistrationOptions createPetRegistrationOptions(int choose, String question) {
         return switch (choose) {
-            case 1 -> new CompleteNamePet(question);
-            case 2 -> new TypePet(question);
-            case 3 -> new GenderPet(question);
-            case 4 -> new AddressPet(question);
-            case 5 -> new AgePet(question);
-            case 6 -> new WeightPet(question);
-            case 7 -> new RacePet(question);
+            case 1 -> new CompleteNamePetRegistration(question);
+            case 2 -> new TypePetRegistration(question);
+            case 3 -> new GenderPetRegistration(question);
+            case 4 -> new AddressPetRegistration(question);
+            case 5 -> new AgePetRegistration(question);
+            case 6 -> new WeightPetRegistration(question);
+            case 7 -> new RacePetRegistration(question);
             default -> throw new RuntimeException("Nenhuma opção valida foi escolhida!");
         };
     }

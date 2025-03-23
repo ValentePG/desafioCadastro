@@ -5,7 +5,7 @@ import dev.valente.desafiocadastro.util.ScannerUtils;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class AlterarAddress implements AlterarInfoIT {
+public class AddressPetAlteration implements IAlterationPetOptions {
 
     @Override
     public String alterarInfoInFile() {

@@ -6,7 +6,7 @@ import dev.valente.desafiocadastro.util.ScannerUtils;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public record TypePet(String question) implements PetRegistrationOptions {
+public record TypePetRegistration(String question) implements PetRegistrationOptions {
 
     @Override
     public void registerPetInfo(Pet pet, Scanner input) {

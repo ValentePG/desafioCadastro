@@ -1,4 +1,4 @@
-package dev.valente.desafiocadastro.entity;
+package dev.valente.desafiocadastro.domain;
 
 public class Address {
 

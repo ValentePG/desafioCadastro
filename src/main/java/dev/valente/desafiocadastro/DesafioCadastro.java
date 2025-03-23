@@ -49,10 +49,9 @@ public class DesafioCadastro {
                     case 3 -> {
                         PetsRepository petsRepository = new PetsRepository();
                         PetsService petsService = new PetsService(petsRepository);
-                        var pets = petsService.getAllPets();
                         petsService.showAllPets();
-                        DeletePetService deletePetService = new DeletePetService();
-                        deletePetService.deletePet(pets);
+                        var pet = petsService.searchPet();
+                        petsService.deletePet(pet);
                     }
                     case 4 -> {
                         PetsRepository petsRepository = new PetsRepository();
@@ -62,8 +61,7 @@ public class DesafioCadastro {
                     case 5 -> {
                         PetsRepository petsRepository = new PetsRepository();
                         PetsService petsService = new PetsService(petsRepository);
-                        SearchPetService petSearch = new SearchPetService(petsRepository);
-                        var petsEncountered = petSearch.searchPets();
+                        var petsEncountered = petsService.searchPets();
                         petsService.showAllPets(petsEncountered);
                     }
                 }

@@ -7,7 +7,7 @@
 Antes de começar, certifique-se de ter os seguintes requisitos instalados na sua máquina:
 
 - [Java 21](https://www.oracle.com/java/technologies/downloads/#java21)  
-- [Maven 3.9.9](https://maven.apache.org/download.cgi)
+- [Maven 3.9.9](https://maven.apache.org/download.cgi) (opcional)
 
 # 🚀 Passo a passo para rodar o projeto
 

@@ -20,6 +20,9 @@ public class PetsService {
 
     public void showAllPets(){
         var files = getAllPets();
+        if(files.isEmpty()){
+            throw new RuntimeException("Não a pets registrados");
+        }
         showPetsFromFile(files);
     }
 

@@ -67,7 +67,7 @@ public class DesafioCadastro {
                 ScannerUtils.cleanBuffer(sc);
                 System.out.println("Por favor digite apenas números de 1 a 6");
             } catch (RuntimeException ex){
-                System.out.println("Por favor insira um número válido de 1 a 6");
+                System.out.println(ex.getMessage());
             }
         } while (input != 6);
 

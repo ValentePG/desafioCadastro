@@ -28,11 +28,18 @@ public class SearchPetService {
     }
 
     public List<File> searchPets() {
+        var filesOfPets = petsRepository.getFilesOfRegisteredPets();
+        if(filesOfPets.isEmpty()) {
+            throw new RuntimeException("Não há pets registrados");
+        }
         var searchCriteria = getCriteriaFromUser();
 
-        var filesOfPets = petsRepository.getFilesOfRegisteredPets();
+        var petsFounded = searchPetsByCriteria(filesOfPets, searchCriteria);
+        if(petsFounded.isEmpty()) {
+            throw new RuntimeException("Nenhum pet foi encontrado");
+        }
 
-        return searchPetsByCriteria(filesOfPets, searchCriteria);
+        return petsFounded;
     }
 
     private Map<Integer, String> getCriteriaFromUser() {
@@ -73,11 +80,11 @@ public class SearchPetService {
             try(BufferedReader br = new BufferedReader(new FileReader(file))){
                 br.lines().forEach(line -> {
                     criterias.forEach((k, v) -> {
-                        if (line.toLowerCase().contains(v))
+                        var formattedLine = line.substring(4).toLowerCase();
+                        if (formattedLine.contains(v))
                             if(!filesEncountered.contains(file))
                                 filesEncountered.add(file);
                     });
-
                 });
             } catch (IOException e) {
                 System.out.println(e.getMessage());

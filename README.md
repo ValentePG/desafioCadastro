@@ -20,8 +20,8 @@ Antes de começar, certifique-se de ter os seguintes requisitos instalados na su
 
 - Linux/MacOs
 
-      ./mvnw clean compile exec:java -Dexec.mainClass=dev.valente.desafiocadastro.DesafioCadastro
+      ./mvnw exec:java -Dexec.mainClass=dev.valente.desafiocadastro.DesafioCadastro
 
 - Windows
 
-      mvnw.cmd clean compile exec:java "-Dexec.mainClass=dev.valente.desafiocadastro.DesafioCadastro"
+      mvnw.cmd exec:java "-Dexec.mainClass=dev.valente.desafiocadastro.DesafioCadastro"

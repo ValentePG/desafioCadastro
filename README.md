@@ -18,4 +18,4 @@ Antes de começar, certifique-se de ter os seguintes requisitos instalados na su
 
 2️⃣ Rodar aplicação
 
-      ./mvnw compile exec:java "-Dexec.mainClass=dev.valente.desafiocadastro.DesafioCadastro"
+    ./mvnw compile exec:java "-Dexec.mainClass=dev.valente.desafiocadastro.DesafioCadastro"

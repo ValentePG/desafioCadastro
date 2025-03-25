@@ -23,9 +23,6 @@ public class DesafioCadastro {
                 System.out.print("Escolha uma opção: ");
                 input = sc.nextInt();
                 ScannerUtils.cleanBuffer(sc);
-                if(input <= 0 || input > NUMBER_OF_OPTIONS){
-                    throw new RuntimeException();
-                }
                 System.out.println("======================================");
                 switch (input){
                     case 1 -> {
@@ -62,6 +59,7 @@ public class DesafioCadastro {
                         var petsEncountered = petsService.searchPets();
                         petsService.showPetsFromFile(petsEncountered);
                     }
+                    default -> System.out.println("Escolha uma opção entre 1 e 6 por favor!");
                 }
             }catch (InputMismatchException ex){
                 ScannerUtils.cleanBuffer(sc);

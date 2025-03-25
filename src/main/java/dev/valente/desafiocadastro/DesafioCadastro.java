@@ -12,8 +12,6 @@ import java.util.Scanner;
 
 public class DesafioCadastro {
 
-    public final static int NUMBER_OF_OPTIONS = 6;
-
     public static void main(String[] args) throws IOException, IllegalAccessException {
         Scanner sc = new Scanner(System.in);
         int input = 0;

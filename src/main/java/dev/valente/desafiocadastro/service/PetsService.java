@@ -32,14 +32,7 @@ public class PetsService {
         for (File file : files) {
             count++;
             sb.append(count).append(". ");
-            try(BufferedReader br = new BufferedReader(new FileReader(file))){
-                br.lines().forEach(line -> {
-                    sb.append(line, 4, line.length()).append(" - ");
-                });
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-            sb.deleteCharAt(sb.length() - 2);
+            formatOutPut(file, sb);
             sb.append("\n");
         }
         sb.deleteCharAt(sb.length() - 1);
@@ -48,15 +41,19 @@ public class PetsService {
 
     public void showPetFromFile(File file){
         StringBuilder sb = new StringBuilder();
+        formatOutPut(file, sb);
+        System.out.println(sb);
+    }
+
+    private void formatOutPut(File file, StringBuilder sb){
         try(BufferedReader br = new BufferedReader(new FileReader(file))){
             br.lines().forEach(line -> {
                 sb.append(line, 4, line.length()).append(" - ");
             });
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
         sb.deleteCharAt(sb.length() - 2);
-        System.out.println(sb);
     }
 
     public List<File> getAllPets(){
